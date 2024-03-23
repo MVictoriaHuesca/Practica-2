@@ -126,20 +126,14 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
             }
             if(current.isNotATerminalNode()) {
                 current.getPrevious().setNext(current.getNext());
-                current.getNext().setPrevious(current.getPrevious());
-            } else if (current.isFirstNode() && current.isLastNode()){
-                first = null;
-                last = null;
+                current.getNext().setPrevious(current.getPrevious()); 
+                size--;
             }else if (current.isFirstNode()) {
-                current.getNext().setPrevious(null);
-                first = current.getNext();
+                deleteFirst();
             } else {
-                current.getPrevious().setNext(null);
-                last = current.getPrevious();
+                deleteLast();
             }
-            size--;
         }
-         
     }
 
     @Override
