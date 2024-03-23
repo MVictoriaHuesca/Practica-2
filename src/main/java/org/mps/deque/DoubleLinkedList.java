@@ -109,7 +109,6 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
             return false;
         }
         LinkedNode<T> current = this.first;
-        int i = 0;
         while(current.getItem() != value && current.getNext() != null){
             current = current.getNext();
         }
