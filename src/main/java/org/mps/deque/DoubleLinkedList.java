@@ -14,6 +14,7 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
         this.size = 0;
     }
 
+
     @Override
     public void prepend(T value) {
         LinkedNode<T> node = new LinkedNode<>(value, null, first);
@@ -104,41 +105,42 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
 
     @Override
     public boolean contains(T value) {
+        if(this.first == null){
+            return false;
+        }
         LinkedNode<T> current = this.first;
         int i = 0;
-        while(current.getItem() != value && i < this.size()) {
+        while(current.getItem() != value && current.getNext() != null){
             current = current.getNext();
-            i++;
         }
-        return i<this.size();
+        return current.getItem() == value;
     }
 
     @Override
     public void remove(T value) {
         if(!this.contains(value)){
             return;
-        }
-        LinkedNode<T> current = this.first;
-        int i = 0;
-        while(i < this.size && current.getItem() != value) {
-            if(current.getItem() == value) {
-                if(current.isNotATerminalNode()) {
-                    current.getPrevious().setNext(current.getNext());
-                    current.getNext().setPrevious(current.getPrevious());
-                } else if (current.isFirstNode() && current.isLastNode()){
-                    first = null;
-                    last = null;
-                }else if (current.isFirstNode()) {
-                    current.getNext().setPrevious(null);
-                    first = current.getNext();
-                } else if(current.isLastNode()) {
-                    current.getPrevious().setNext(null);
-                    last = current.getPrevious();
-                } 
+        } else {
+            LinkedNode<T> current = this.first;
+            while(current.getItem() != value) {
+                current = current.getNext();
             }
-            current = current.getNext();
-            i++;
+            if(current.isNotATerminalNode()) {
+                current.getPrevious().setNext(current.getNext());
+                current.getNext().setPrevious(current.getPrevious());
+            } else if (current.isFirstNode() && current.isLastNode()){
+                first = null;
+                last = null;
+            }else if (current.isFirstNode()) {
+                current.getNext().setPrevious(null);
+                first = current.getNext();
+            } else {
+                current.getPrevious().setNext(null);
+                last = current.getPrevious();
+            }
+            size--;
         }
+         
     }
 
     @Override

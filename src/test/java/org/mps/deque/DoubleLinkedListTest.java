@@ -1,4 +1,5 @@
 package org.mps.deque;
+
 import java.util.Comparator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,7 +27,7 @@ public class DoubleLinkedListTest {
 
         @Test
         @DisplayName("DeleteFirst cola vacia devuelve excepcion DoubleLinkedQueueException")
-        void deleteFirst_colaVacia_Test() {
+        public void deleteFirst_colaVacia_Test() {
             myLinkedList = new DoubleLinkedList<>();
             DoubleLinkedQueueException thrown = assertThrows(DoubleLinkedQueueException.class, ()->{
                 myLinkedList.deleteFirst();
@@ -36,7 +37,7 @@ public class DoubleLinkedListTest {
 
         @Test
         @DisplayName("DeleteLast cola vacia devuelve excepcion DoubleLinkedQueueException")
-        void deleteLast_colaVacia_Test() {
+        public void deleteLast_colaVacia_Test() {
             myLinkedList = new DoubleLinkedList<>();
             DoubleLinkedQueueException thrown = assertThrows    (DoubleLinkedQueueException.class, ()->{
                 myLinkedList.deleteLast();
@@ -46,7 +47,7 @@ public class DoubleLinkedListTest {
 
         @Test
         @DisplayName("First cola vacia devuelve excepcion DoubleLinkedQueueException")
-        void first_colaVacia_Test() {
+        public void first_colaVacia_Test() {
             myLinkedList = new DoubleLinkedList<>();
             DoubleLinkedQueueException thrown = assertThrows    (DoubleLinkedQueueException.class, ()->{
                 myLinkedList.first();
@@ -56,7 +57,7 @@ public class DoubleLinkedListTest {
 
         @Test
         @DisplayName("Last cola vacia devuelve excepcion DoubleLinkedQueueException")
-        void last_colaVacia_Test() throws DoubleLinkedQueueException{
+        public void last_colaVacia_Test(){
             myLinkedList = new DoubleLinkedList<>();
             DoubleLinkedQueueException thrown = assertThrows    (DoubleLinkedQueueException.class, ()->{
                 myLinkedList.last();
@@ -64,6 +65,38 @@ public class DoubleLinkedListTest {
             assertEquals("The LinkedList is empty", thrown.getMessage());
         }
 
+        @Test
+        @DisplayName("Get index en cola vacia devuelve excepcion IndexOutOfBoundsException")
+        public void get_colaVacia_Test(){
+            myLinkedList = new DoubleLinkedList<>();
+            IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, ()->{
+                myLinkedList.get(0);
+            });
+            assertEquals("Index out of range", thrown.getMessage());
+        }
+
+        @Test
+        @DisplayName("Contains en cola vacia devuelve false")
+        public void contains_colaVacia_Test(){
+            myLinkedList = new DoubleLinkedList<>();
+            assertEquals(false, myLinkedList.contains(1));
+        }
+
+        @Test
+        @DisplayName("Remove en cola vacia no hace nada") //11
+        public void remove_colaVacia_Test(){
+            myLinkedList = new DoubleLinkedList<>();
+            myLinkedList.remove(1);
+            assertEquals(0, myLinkedList.size());
+        }
+
+        @Test
+        @DisplayName("Sort en cola vacia no hace nada")
+        public void sort_colaVacia_Test(){
+            myLinkedList = new DoubleLinkedList<>();
+            myLinkedList.sort(Comparator.naturalOrder());
+            assertEquals(0, myLinkedList.size());
+        }
     }
 
     @Nested
@@ -72,7 +105,7 @@ public class DoubleLinkedListTest {
 
         @Test
         @DisplayName("Prepend nodo unico")
-        public void prepend_soloUnNodo_Test() throws DoubleLinkedQueueException{
+        public void prepend_soloUnNodo_Test(){
             myLinkedList = new DoubleLinkedList<>();
             myLinkedList.prepend(1);
             assertEquals(1, myLinkedList.size());
@@ -82,7 +115,7 @@ public class DoubleLinkedListTest {
 
         @Test
         @DisplayName("Append nodo unico")
-        public void append_soloUnNodo_Test() throws DoubleLinkedQueueException{
+        public void append_soloUnNodo_Test(){
             myLinkedList = new DoubleLinkedList<>();
             myLinkedList.append(1);
             assertEquals(1, myLinkedList.size());
@@ -160,6 +193,121 @@ public class DoubleLinkedListTest {
                 myLinkedList.deleteLast();
                 myLinkedList.deleteLast();
                 assertEquals(0, myLinkedList.size());
+            }
+
+            @Test
+            @DisplayName("Get con index > size devuelve IndexOutOfBoundsException")
+            public void get_indexMayorQueSize_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(1);
+                myLinkedList.append(2);
+                myLinkedList.append(3);
+                IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, ()->{
+                    myLinkedList.get(3);
+                });
+                assertEquals("Index out of range", thrown.getMessage());
+            }
+
+            @Test
+            @DisplayName("Get con index correcto devuelve el item en la posicion index")
+            public void get_indexCorrecto_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(1);
+                myLinkedList.append(2);
+                myLinkedList.append(3);
+                assertEquals(2, myLinkedList.get(1));
+            }
+
+            @Test
+            @DisplayName("Contains con item que no esta en la cola devuelve false")
+            public void contains_itemNoEnCola_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(1);
+                myLinkedList.append(2);
+                myLinkedList.append(3);
+                assertEquals(false, myLinkedList.contains(4));
+            }
+
+            @Test
+            @DisplayName("Contains con item que esta en la cola devuelve true")
+            public void contains_itemEnCola_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(1);
+                myLinkedList.append(2);
+                myLinkedList.append(3);
+                assertEquals(true, myLinkedList.contains(2));
+            }
+
+            @Test
+            @DisplayName("Remove con item que no esta en la cola no hace nada") 
+            public void remove_itemNoEnCola_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(1);
+                myLinkedList.append(2);
+                myLinkedList.append(3);
+                myLinkedList.remove(4);
+                assertEquals(3, myLinkedList.size());
+            }
+
+            @Test
+            @DisplayName("Remove con item que esta en la cola y no es terminal lo elimina") 
+            public void remove_itemEnColaNoTerminal_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(1);
+                myLinkedList.append(2);
+                myLinkedList.append(3);
+                myLinkedList.remove(2);
+                assertEquals(2, myLinkedList.size());
+                assertEquals(1, myLinkedList.first());
+                assertEquals(3, myLinkedList.last());
+            }
+
+            @Test
+            @DisplayName("Remove con item que esta en la cola y es primer nodo lo elimina")
+            public void remove_itemEnColaPrimerNodo_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(1);
+                myLinkedList.append(2);
+                myLinkedList.append(3);
+                myLinkedList.remove(1);
+                assertEquals(2, myLinkedList.size());
+                assertEquals(2, myLinkedList.first());
+                assertEquals(3, myLinkedList.last());
+            }
+
+            @Test
+            @DisplayName("Remove con item que esta en la cola y es ultimo nodo lo elimina") 
+            public void remove_itemEnColaUltimoNodo_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(1);
+                myLinkedList.append(2);
+                myLinkedList.append(3);
+                myLinkedList.remove(3);
+                assertEquals(2, myLinkedList.size());
+                assertEquals(1, myLinkedList.first());
+                assertEquals(2, myLinkedList.last());
+            }
+
+            @Test
+            @DisplayName("Remove con item que esta en la cola y es el unico nodo lo elimina") 
+            public void remove_itemEnColaUnicoNodo_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(1);
+                myLinkedList.remove(1);
+                assertEquals(0, myLinkedList.size());
+            }
+
+            @Test
+            @DisplayName("Sort con cola desordenada la ordena")
+            public void sort_colaDesordenada_Test() {
+                myLinkedList = new DoubleLinkedList<>();
+                myLinkedList.append(3);
+                myLinkedList.append(1);
+                myLinkedList.append(2);
+                myLinkedList.sort(Comparator.naturalOrder());
+                assertEquals(1, myLinkedList.first());
+                assertEquals(2, myLinkedList.get(1));
+                assertEquals(3, myLinkedList.last());
             }
         }
     }
