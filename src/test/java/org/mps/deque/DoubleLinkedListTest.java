@@ -1,13 +1,11 @@
 package org.mps.deque;
-
+import java.util.Comparator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mps.deque.DoubleLinkedList;
-import org.mps.deque.DoubleLinkedQueueException;
 
 
 public class DoubleLinkedListTest {
