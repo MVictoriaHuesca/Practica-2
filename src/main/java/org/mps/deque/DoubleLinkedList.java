@@ -1,7 +1,5 @@
 package org.mps.deque;
 
-import java.util.Comparator;
-
 public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
 
     private LinkedNode<T> first;

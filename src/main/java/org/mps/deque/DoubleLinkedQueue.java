@@ -1,7 +1,5 @@
 package org.mps.deque;
 
-import java.util.Comparator;
-
 /**
  * A double-ended queue or deque is a linear collection that supports element
  * insertion, retrieval and removal at both ends.
