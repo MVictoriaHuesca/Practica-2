@@ -91,26 +91,78 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
     }
 
     @Override
-    public T get(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+    public T get(int index){
+        if(index <= 0 || index >= this.size){
+            throw new IndexOutOfBoundsException("Index out of range");
+        }
+        LinkedNode<T> current = this.first;
+        for (int i=0; i<index; i++) {
+            current = current.getNext();
+        }
+        return current.getItem();
     }
 
     @Override
     public boolean contains(T value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        LinkedNode<T> current = this.first;
+        int i = 0;
+        while(current.getItem() != value && i < this.size()) {
+            current = current.getNext();
+            i++;
+        }
+        return i<this.size();
     }
 
     @Override
     public void remove(T value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        if(!this.contains(value)){
+            return;
+        }
+        LinkedNode<T> current = this.first;
+        int i = 0;
+        while(i < this.size && current.getItem() != value) {
+            if(current.getItem() == value) {
+                if(current.isNotATerminalNode()) {
+                    current.getPrevious().setNext(current.getNext());
+                    current.getNext().setPrevious(current.getPrevious());
+                } else if (current.isFirstNode() && current.isLastNode()){
+                    first = null;
+                    last = null;
+                }else if (current.isFirstNode()) {
+                    current.getNext().setPrevious(null);
+                    first = current.getNext();
+                } else if(current.isLastNode()) {
+                    current.getPrevious().setNext(null);
+                    last = current.getPrevious();
+                } 
+            }
+            current = current.getNext();
+            i++;
+        }
     }
 
     @Override
     public void sort(Comparator<? super T> comparator) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sort'");
+        int swaped;
+        LinkedNode<T> ptr1;
+        LinkedNode<T> lptr = null;
+        if(this.first == null){
+            return;
+        }
+        do {
+            swaped = 0;
+            ptr1 = this.first;
+            while(ptr1.getNext() != lptr) {
+                if(comparator.compare(ptr1.getItem(), ptr1.getNext().getItem()) > 0) {
+                    T temp = ptr1.getItem();
+                    ptr1.setItem(ptr1.getNext().getItem());
+                    ptr1.getNext().setItem(temp);
+                    swaped = 1;
+                }
+                ptr1 = ptr1.getNext();
+            }
+            lptr = ptr1;
+        } while(swaped != 0);
     }
 }
+
