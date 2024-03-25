@@ -1,13 +1,9 @@
-<<<<<<< Updated upstream
-=======
 package org.mps.deque;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Nested;
-
-import java.util.Comparator;
 
 public class DoubleLinkedListTest {
 
@@ -146,8 +142,6 @@ public class DoubleLinkedListTest {
                 dbl.last();
             });
         }
+        
     }
-
-    
 }
->>>>>>> Stashed changes

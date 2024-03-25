@@ -9,24 +9,43 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
     private int size;
 
     public DoubleLinkedList() {
-        // TODO
+        first = null;
+        last = null;
+        size = 0;
     }
 
     @Override
     public void prepend(T value) {
-        // TODO
+        LinkedNode<T> node = new LinkedNode<T>(value,null,first);
+
+        if(first== null){
+            first = node;
+            last = node;
+        }
+        else{
+            first.setPrevious(node);
+            first = node;
+        }
+        size++;
     }
 
     @Override
     public void append(T value) {
-        // TODO
+        LinkedNode<T> node = new LinkedNode<T>(value,last,null);
+
+        if(last == null){
+            first = node;
+            last = node;
+        }
+        else{
+            last.setNext(node);
+            last = node;
+        }
+        size++;
     }
 
     @Override
     public void deleteFirst() {
-<<<<<<< Updated upstream
-        // TODO
-=======
 
         if(first == null){
             throw new DoubleLinkedQueueException("The list is empty");
@@ -35,30 +54,38 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
         first = first.getNext();
         first.setPrevious(null);
         size--;
->>>>>>> Stashed changes
     }
 
     @Override
     public void deleteLast() {
-        // TODO
+        if(last == null){
+            throw new DoubleLinkedQueueException("La lista enlazada esta vacia");
+        }
+
+        last = last.getPrevious();
+        last.setNext(null);
+        size--;
     }
 
     @Override
     public T first() {
-        // TODO
-        return null;
+        if(this.first == null){
+            throw new DoubleLinkedQueueException("La lista enlazada esta vacia");
+        }
+        return this.first.getItem();
     }
 
     @Override
     public T last() {
-        // TODO
-        return null;
+        if(this.last == null){
+            throw new DoubleLinkedQueueException("La lista enlazada esta vacia");
+        }
+        return this.last.getItem();
     }
 
     @Override
     public int size() {
-        // TODO
-        return 0;
+        return size;
     }
 
 }
