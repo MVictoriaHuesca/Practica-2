@@ -1,5 +1,7 @@
 package org.mps.deque;
 
+import java.util.Comparator;
+
 public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
 
     private LinkedNode<T> first;
@@ -22,7 +24,18 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
 
     @Override
     public void deleteFirst() {
+<<<<<<< Updated upstream
         // TODO
+=======
+
+        if(first == null){
+            throw new DoubleLinkedQueueException("The list is empty");
+        }
+
+        first = first.getNext();
+        first.setPrevious(null);
+        size--;
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -47,4 +60,5 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
         // TODO
         return 0;
     }
+
 }
