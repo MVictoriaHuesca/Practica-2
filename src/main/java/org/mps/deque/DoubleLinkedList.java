@@ -1,3 +1,8 @@
+/*
+ * @autor1 = Eduardo García Rivas
+ * @autor2 = María Victoria Huesca Peláez
+ */
+
 package org.mps.deque;
 
 import java.util.Comparator;
